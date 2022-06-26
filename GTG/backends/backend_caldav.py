@@ -58,7 +58,7 @@ class Backend(PeriodicImportBackend):
 
     _general_description = {
         GenericBackend.BACKEND_NAME: 'backend_caldav',
-        GenericBackend.BACKEND_ICON: 'applications-internet',
+        GenericBackend.BACKEND_ICON: 'network-server',
         GenericBackend.BACKEND_HUMAN_NAME: _('CalDAV tasks'),
         GenericBackend.BACKEND_AUTHORS: ['Mildred Ki\'Lya',
                                          'François Schmidts'],
