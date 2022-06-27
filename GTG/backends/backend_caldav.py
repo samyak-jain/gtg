@@ -233,33 +233,7 @@ class Backend(PeriodicImportBackend):
                                          import_started_on: datetime):
         """For a given UID will decide if we remove it from GTG or ignore the
         fact that it's missing"""
-        task, do_delete = None, False
-        task = calendar_tasks[uid]
-        if import_started_on < task.get_added_date():
-            return
-        # if first run, we're getting all task, including completed
-        # if we miss one, we delete it
-        if not self._cache.initialized:
-            do_delete = True
-        # if cache is initialized, it's normal we missed completed
-        # task, but we should have seen active ones
-        elif task.get_status() == Task.STA_ACTIVE:
-            __, calendar = self._get_todo_and_calendar(task)
-            if not calendar:
-                logger.warning("Couldn't find calendar for %r", task)
-                return
-            try:  # fetching missing todo from server
-                todo = calendar.todo_by_uid(uid)
-            except caldav.lib.error.NotFoundError:
-                do_delete = True
-            else:
-                result = self._update_task(task, todo, force=True)
-                counts[result] += 1
-                return
-        if do_delete:  # the task was missing for a good reason
-            counts['deleted'] += 1
-            self._cache.del_todo(uid)
-            self.datastore.request_task_deletion(uid)
+        pass
 
     @staticmethod
     def _denorm_children_on_vtodos(todos: list):
